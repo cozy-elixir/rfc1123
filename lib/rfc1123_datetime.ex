@@ -64,4 +64,8 @@ defmodule Rfc1123DateTime do
       {:error, _, _, _, _, _} -> {:error, "Invalid datetime"}
     end
   end
+
+  def to_string(datetime) do
+    Calendar.strftime(datetime, "%a, %d %b %Y %H:%M:%S GMT")
+  end
 end
