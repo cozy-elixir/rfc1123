@@ -1,71 +1,49 @@
 defmodule Rfc1123DateTime do
-  defmodule Parser do
-    import NimbleParsec
+  @moduledoc """
+  RFC 1123 date time parser.
+  """
 
-    defp month_to_int("Jan"), do: 1
-    defp month_to_int("Feb"), do: 2
-    defp month_to_int("Mar"), do: 3
-    defp month_to_int("Apr"), do: 4
-    defp month_to_int("May"), do: 5
-    defp month_to_int("Jun"), do: 6
-    defp month_to_int("Jul"), do: 7
-    defp month_to_int("Aug"), do: 8
-    defp month_to_int("Sep"), do: 9
-    defp month_to_int("Oct"), do: 10
-    defp month_to_int("Nov"), do: 11
-    defp month_to_int("Dec"), do: 12
+  @doc """
+  Format a RFC 1123 date time string.
 
-    date =
-      ignore(ascii_string([?A..?z], 3))
-      |> ignore(string(", "))
-      |> choice([integer(2), integer(1)])
-      |> ignore(string(" "))
-      |> ascii_string([?A..?z], 3)
-      |> ignore(string(" "))
-      |> integer(4)
-
-    time =
-      integer(2)
-      |> ignore(string(":"))
-      |> integer(2)
-      |> ignore(string(":"))
-      |> integer(2)
-      |> ignore(string(" "))
-      |> string("GMT")
-
-    defparsec(
-      :datetime,
-      date |> ignore(string(" ")) |> concat(time) |> post_traverse({:to_datetime, []})
-    )
-
-    defp to_datetime(rest, args, context, _line, _offset) do
-      ["GMT", second, minute, hour, year, month, day] = args
-
-      datetime = %DateTime{
-        year: year,
-        month: month_to_int(month),
-        day: day,
-        hour: hour,
-        minute: minute,
-        second: second,
-        zone_abbr: "UTC",
-        utc_offset: 0,
-        std_offset: 0,
-        time_zone: "Etc/UTC"
-      }
-
-      {rest, [datetime], context}
-    end
-  end
-
-  def parse(date) do
-    case Parser.datetime(date) do
-      {:ok, [datetime], _, _, _, _} -> {:ok, datetime}
-      {:error, _, _, _, _, _} -> {:error, "Invalid datetime"}
-    end
-  end
-
+  ## Example
+    iex> Rfc1123DateTime.to_string(~U[2000-01-01 00:00:00Z])
+    "Sat, 01 Jan 2000 00:00:00 GMT"
+  """
   def to_string(datetime) do
     Calendar.strftime(datetime, "%a, %d %b %Y %H:%M:%S GMT")
+  end
+
+  @doc """
+  Parse a RFC 1123 date time string.
+
+  ## Example
+    iex> Rfc1123DateTime.parse("Mon, 01 Jan 2000 00:00:00 GMT")
+    {:ok, ~U[2000-01-01 00:00:00Z]}
+  """
+
+  def parse(date) do
+    case Rfc1123DateTime.Parsec.datetime(date) do
+      {:ok, args, _, _, _, _} ->
+        {:ok, to_datetime(args)}
+
+      {:error, expected, got, _, _, line} ->
+        {:error, "#{expected}, got: '#{got}' at offset #{line}"}
+    end
+  end
+
+  defp to_datetime([day, month, year, hour, minute, second, "GMT"]) do
+    %DateTime{
+      year: year,
+      month: month,
+      day: day,
+      hour: hour,
+      minute: minute,
+      second: second,
+      zone_abbr: "UTC",
+      utc_offset: 0,
+      std_offset: 0,
+      time_zone: "Etc/UTC"
+    }
   end
 end
