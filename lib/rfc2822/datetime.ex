@@ -9,7 +9,7 @@ defmodule RFC2822.DateTime do
 
     * parsing string with zone except `GMT` / `UT` / `UTC` is not supported,
       such as `Mon, 05 Mar 2018 00:00:00 +0000`.
- 
+
   ## About `UTC`
 
   In RFC 2822, `UTC` shouldn't be used as a timezone.
@@ -25,8 +25,8 @@ defmodule RFC2822.DateTime do
 
   ## Example
 
-    iex> RFC2822.DateTime.to_string(~U[2000-01-01 00:00:00Z])
-    "Sat, 01 Jan 2000 00:00:00 GMT"
+      iex> RFC2822.DateTime.to_string(~U[2000-01-01 00:00:00Z])
+      "Sat, 01 Jan 2000 00:00:00 GMT"
 
   """
   @spec to_string(Calendar.datetime()) :: String.t()
@@ -43,14 +43,14 @@ defmodule RFC2822.DateTime do
 
   ## Example
 
-    iex> RFC2822.DateTime.parse("Mon, 01 Jan 2000 00:00:00 GMT")
-    {:ok, ~U[2000-01-01 00:00:00Z]}
+      iex> RFC2822.DateTime.parse("Mon, 01 Jan 2000 00:00:00 GMT")
+      {:ok, ~U[2000-01-01 00:00:00Z]}
 
-    iex> RFC2822.DateTime.parse("Mon, 01 Jan 2000 00:00:00 UT")
-    {:ok, ~U[2000-01-01 00:00:00Z]}
+      iex> RFC2822.DateTime.parse("Mon, 01 Jan 2000 00:00:00 UT")
+      {:ok, ~U[2000-01-01 00:00:00Z]}
 
-    iex> RFC2822.DateTime.parse("Mon, 01 Jan 2000 00:00:00 UTC")
-    {:ok, ~U[2000-01-01 00:00:00Z]}
+      iex> RFC2822.DateTime.parse("Mon, 01 Jan 2000 00:00:00 UTC")
+      {:ok, ~U[2000-01-01 00:00:00Z]}
 
   """
   @spec parse(String.t()) :: {:ok, DateTime.t()} | {:error, atom()}
