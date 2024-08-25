@@ -1,5 +1,8 @@
 # RFC2822
 
+[![CI](https://github.com/cozy-elixir/rfc2822/actions/workflows/ci.yml/badge.svg)](https://github.com/cozy-elixir/rfc2822/actions/workflows/ci.yml)
+[![Hex.pm](https://img.shields.io/hexpm/v/rfc2822.svg)](https://hex.pm/packages/rfc2822)
+
 An implementation of RFC 2822.
 
 ## Installation
