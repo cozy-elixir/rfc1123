@@ -1,5 +1,5 @@
 # Generated from lib/rfc2822/datetime_parsec.ex.exs, do not edit.
-# Generated at 2024-08-25 08:32:07Z.
+# Generated at 2024-08-25 08:37:00Z.
 
 defmodule RFC2822.DateTime.Parsec do
   @doc """
