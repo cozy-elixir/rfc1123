@@ -1,10 +1,11 @@
-defmodule Rfc1123DateTimeTest do
+defmodule RFC2822.DateTimeTest do
   use ExUnit.Case
-  doctest Rfc1123DateTime
+
+  doctest RFC2822.DateTime
 
   test "parses the provided date" do
     date = "Sun, 21 Oct 2018 12:16:24 GMT"
-    assert {:ok, ~U[2018-10-21 12:16:24Z]} = Rfc1123DateTime.parse(date)
+    assert {:ok, ~U[2018-10-21 12:16:24Z]} = RFC2822.DateTime.parse(date)
   end
 
   test "parse" do
@@ -33,7 +34,7 @@ defmodule Rfc1123DateTimeTest do
     }
 
     Enum.map(dates, fn {string, datetime} ->
-      assert Rfc1123DateTime.parse(string) == {:ok, datetime}
+      assert RFC2822.DateTime.parse(string) == {:ok, datetime}
     end)
   end
 
@@ -63,7 +64,7 @@ defmodule Rfc1123DateTimeTest do
     }
 
     Enum.map(dates, fn {string, datetime} ->
-      assert Rfc1123DateTime.to_string(datetime) == string
+      assert RFC2822.DateTime.to_string(datetime) == string
     end)
   end
 end

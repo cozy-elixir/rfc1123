@@ -1,7 +1,7 @@
-# Generated from lib/rfc1123_datetime_parsec.ex.exs, do not edit.
-# Generated at 2023-02-03 09:48:42Z.
+# Generated from lib/rfc2822/datetime_parsec.ex.exs, do not edit.
+# Generated at 2024-08-25 08:32:07Z.
 
-defmodule Rfc1123DateTime.Parsec do
+defmodule RFC2822.DateTime.Parsec do
   @doc """
   Parses the given `binary` as datetime.
 
@@ -59,7 +59,7 @@ defmodule Rfc1123DateTime.Parsec do
 
   defp datetime__0(rest, _acc, _stack, context, line, offset) do
     {:error,
-     "expected ASCII character in the range 'A' to 'z', followed by ASCII character in the range 'A' to 'z', followed by ASCII character in the range 'A' to 'z', followed by string \", \"",
+     "expected ASCII character in the range \"A\" to \"z\", followed by ASCII character in the range \"A\" to \"z\", followed by ASCII character in the range \"A\" to \"z\", followed by string \", \"",
      rest, context, line, offset}
   end
 
@@ -82,7 +82,7 @@ defmodule Rfc1123DateTime.Parsec do
 
   defp datetime__1(rest, _acc, _stack, context, line, offset) do
     {:error,
-     "expected ASCII character in the range '0' to '9', followed by ASCII character in the range '0' to '9' or ASCII character in the range '0' to '9'",
+     "expected ASCII character in the range \"0\" to \"9\", followed by ASCII character in the range \"0\" to \"9\" or ASCII character in the range \"0\" to \"9\"",
      rest, context, line, offset}
   end
 
@@ -119,27 +119,27 @@ defmodule Rfc1123DateTime.Parsec do
   end
 
   defp datetime__3(<<"Jul", rest::binary>>, acc, stack, context, comb__line, comb__offset) do
-    datetime__4(rest, '\a' ++ acc, stack, context, comb__line, comb__offset + 3)
+    datetime__4(rest, ~c"\a" ++ acc, stack, context, comb__line, comb__offset + 3)
   end
 
   defp datetime__3(<<"Aug", rest::binary>>, acc, stack, context, comb__line, comb__offset) do
-    datetime__4(rest, '\b' ++ acc, stack, context, comb__line, comb__offset + 3)
+    datetime__4(rest, ~c"\b" ++ acc, stack, context, comb__line, comb__offset + 3)
   end
 
   defp datetime__3(<<"Sep", rest::binary>>, acc, stack, context, comb__line, comb__offset) do
-    datetime__4(rest, '\t' ++ acc, stack, context, comb__line, comb__offset + 3)
+    datetime__4(rest, ~c"\t" ++ acc, stack, context, comb__line, comb__offset + 3)
   end
 
   defp datetime__3(<<"Oct", rest::binary>>, acc, stack, context, comb__line, comb__offset) do
-    datetime__4(rest, '\n' ++ acc, stack, context, comb__line, comb__offset + 3)
+    datetime__4(rest, ~c"\n" ++ acc, stack, context, comb__line, comb__offset + 3)
   end
 
   defp datetime__3(<<"Nov", rest::binary>>, acc, stack, context, comb__line, comb__offset) do
-    datetime__4(rest, '\v' ++ acc, stack, context, comb__line, comb__offset + 3)
+    datetime__4(rest, ~c"\v" ++ acc, stack, context, comb__line, comb__offset + 3)
   end
 
   defp datetime__3(<<"Dec", rest::binary>>, acc, stack, context, comb__line, comb__offset) do
-    datetime__4(rest, '\f' ++ acc, stack, context, comb__line, comb__offset + 3)
+    datetime__4(rest, ~c"\f" ++ acc, stack, context, comb__line, comb__offset + 3)
   end
 
   defp datetime__3(rest, _acc, _stack, context, line, offset) do
@@ -149,7 +149,7 @@ defmodule Rfc1123DateTime.Parsec do
   end
 
   defp datetime__4(
-         <<" ", x0, x1, x2, x3, " ", x4, x5, ":", x6, x7, ":", x8, x9, " ", "GMT", rest::binary>>,
+         <<" ", x0, x1, x2, x3, " ", x4, x5, ":", x6, x7, ":", x8, x9, " ", rest::binary>>,
          acc,
          stack,
          context,
@@ -163,7 +163,6 @@ defmodule Rfc1123DateTime.Parsec do
     datetime__5(
       rest,
       [
-        "GMT",
         x9 - 48 + (x8 - 48) * 10,
         x7 - 48 + (x6 - 48) * 10,
         x5 - 48 + (x4 - 48) * 10,
@@ -172,17 +171,59 @@ defmodule Rfc1123DateTime.Parsec do
       stack,
       context,
       comb__line,
-      comb__offset + 18
+      comb__offset + 15
     )
   end
 
   defp datetime__4(rest, _acc, _stack, context, line, offset) do
     {:error,
-     "expected string \" \", followed by ASCII character in the range '0' to '9', followed by ASCII character in the range '0' to '9', followed by ASCII character in the range '0' to '9', followed by ASCII character in the range '0' to '9', followed by string \" \", followed by ASCII character in the range '0' to '9', followed by ASCII character in the range '0' to '9', followed by string \":\", followed by ASCII character in the range '0' to '9', followed by ASCII character in the range '0' to '9', followed by string \":\", followed by ASCII character in the range '0' to '9', followed by ASCII character in the range '0' to '9', followed by string \" \", followed by string \"GMT\"",
+     "expected string \" \", followed by ASCII character in the range \"0\" to \"9\", followed by ASCII character in the range \"0\" to \"9\", followed by ASCII character in the range \"0\" to \"9\", followed by ASCII character in the range \"0\" to \"9\", followed by string \" \", followed by ASCII character in the range \"0\" to \"9\", followed by ASCII character in the range \"0\" to \"9\", followed by string \":\", followed by ASCII character in the range \"0\" to \"9\", followed by ASCII character in the range \"0\" to \"9\", followed by string \":\", followed by ASCII character in the range \"0\" to \"9\", followed by ASCII character in the range \"0\" to \"9\", followed by string \" \"",
      rest, context, line, offset}
   end
 
-  defp datetime__5(rest, acc, _stack, context, line, offset) do
+  defp datetime__5(rest, acc, stack, context, line, offset) do
+    datetime__6(rest, [], [acc | stack], context, line, offset)
+  end
+
+  defp datetime__6(rest, acc, stack, context, line, offset) do
+    datetime__8(rest, acc, [3 | stack], context, line, offset)
+  end
+
+  defp datetime__8(<<x0, rest::binary>>, acc, stack, context, comb__line, comb__offset)
+       when x0 >= 65 and x0 <= 90 do
+    datetime__9(rest, [x0] ++ acc, stack, context, comb__line, comb__offset + 1)
+  end
+
+  defp datetime__8(rest, acc, stack, context, line, offset) do
+    datetime__7(rest, acc, stack, context, line, offset)
+  end
+
+  defp datetime__7(rest, acc, [_ | stack], context, line, offset) do
+    datetime__10(rest, acc, stack, context, line, offset)
+  end
+
+  defp datetime__9(rest, acc, [1 | stack], context, line, offset) do
+    datetime__10(rest, acc, stack, context, line, offset)
+  end
+
+  defp datetime__9(rest, acc, [count | stack], context, line, offset) do
+    datetime__8(rest, acc, [count - 1 | stack], context, line, offset)
+  end
+
+  defp datetime__10(rest, user_acc, [acc | stack], context, line, offset) do
+    _ = user_acc
+
+    datetime__11(
+      rest,
+      [List.to_string(:lists.reverse(user_acc))] ++ acc,
+      stack,
+      context,
+      line,
+      offset
+    )
+  end
+
+  defp datetime__11(rest, acc, _stack, context, line, offset) do
     {:ok, acc, rest, context, line, offset}
   end
 end

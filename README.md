@@ -1,21 +1,23 @@
-# Rfc1123DateTime
+# RFC2822
 
-**TODO: Add description**
+An implementation of RFC 2822.
 
 ## Installation
 
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `rfc1123_date` to your list of dependencies in `mix.exs`:
+Add `:rfc2822` to the list of dependencies in `mix.exs`:
 
 ```elixir
 def deps do
   [
-    {:rfc1123_datetime, "~> 0.1.1"}
+    {:rfc2822, <requirement>}
   ]
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/rfc1123_date>.
+## Usage
 
+For more information, see the [documentation](https://hexdocs.pm/rfc2822).
+
+## License
+
+[Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)

@@ -1,5 +1,5 @@
-defmodule Rfc1123DateTime.Parsec do
-  # parsec:Rfc1123DateTime.Parsec
+defmodule RFC2822.DateTime.Parsec do
+  # parsec:RFC2822.DateTime.Parsec
   import NimbleParsec
 
   month =
@@ -33,13 +33,14 @@ defmodule Rfc1123DateTime.Parsec do
     |> integer(2)
     |> ignore(string(":"))
     |> integer(2)
-    |> ignore(string(" "))
-    |> string("GMT")
+
+  zone_abbr =
+    ascii_string([?A..?Z], max: 3)
 
   defparsec(
     :datetime,
-    date |> ignore(string(" ")) |> concat(time)
+    date |> ignore(string(" ")) |> concat(time) |> ignore(string(" ")) |> concat(zone_abbr)
   )
 
-  # parsec:Rfc1123DateTime.Parsec
+  # parsec:RFC2822.DateTime.Parsec
 end

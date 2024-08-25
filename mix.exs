@@ -1,51 +1,68 @@
-defmodule Rfc1123DateTime.MixProject do
+defmodule RFC2822.MixProject do
   use Mix.Project
+
+  @version "0.1.0"
+  @description "An implementation of RFC 2822."
+  @source_url "https://github.com/cozy-elixir/rfc2822"
 
   def project do
     [
-      app: :rfc1123_datetime,
-      version: "0.1.2",
-      elixir: "~> 1.14",
+      app: :rfc2822,
+      version: @version,
+      elixir: "~> 1.15",
       start_permanent: Mix.env() == :prod,
-      aliases: aliases(),
       deps: deps(),
-      package: package()
+      description: @description,
+      source_url: @source_url,
+      homepage_url: @source_url,
+      docs: docs(),
+      package: package(),
+      aliases: aliases()
     ]
   end
 
-  def package do
-    [
-      description: "RFC 1123 date time parser",
-      licenses: ["Apache-2.0"],
-      links: %{
-        "github" => "https://github.com/dkuku/rfc1123_datetime"
-      }
-    ]
-  end
-
+  # Run "mix help compile.app" to learn about applications.
   def application do
     [
       extra_applications: []
     ]
   end
 
+  # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:ex_doc, "~> 0.28", only: :dev, runtime: false},
-      {:nimble_parsec, "~> 1.2", only: [:dev, :test], runtime: false}
+      {:nimble_parsec, "~> 1.4", only: [:dev, :test], runtime: false}
     ]
   end
 
-  defp aliases() do
+  defp docs do
     [
-      publish: [
-        "format",
-        "cmd rm -f lib/rfc1123_datetime_parsec.ex",
-        "nimble_parsec.compile lib/rfc1123_datetime_parsec.ex.exs",
-        "compile",
-        "cmd mix docs",
-        "cmd mix hex.publish"
-      ]
+      extras: ["README.md"],
+      source_url: @source_url,
+      source_ref: "v#{@version}"
     ]
+  end
+
+  defp package do
+    [
+      licenses: ["Apache-2.0"],
+      links: %{
+        GitHub: @source_url
+      }
+    ]
+  end
+
+  defp aliases do
+    [
+      compile: ["nimble_parsec.compile lib/rfc2822/datetime_parsec.ex.exs", "compile"],
+      publish: ["compile.datetime_parser", "hex.publish", "tag"],
+      tag: &tag_release/1
+    ]
+  end
+
+  defp tag_release(_) do
+    Mix.shell().info("Tagging release as v#{@version}")
+    System.cmd("git", ["tag", "v#{@version}"])
+    System.cmd("git", ["push", "--tags"])
   end
 end
