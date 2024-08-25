@@ -1,7 +1,7 @@
 defmodule RFC2822.MixProject do
   use Mix.Project
 
-  @version "0.1.0"
+  @version "0.1.1"
   @description "An implementation of RFC 2822."
   @source_url "https://github.com/cozy-elixir/rfc2822"
 
