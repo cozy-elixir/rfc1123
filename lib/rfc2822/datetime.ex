@@ -2,8 +2,8 @@ defmodule RFC2822.DateTime do
   @moduledoc """
   The implementation of RFC 2822 <3.3. Date and Time Specification>.
 
-  > When talking about date time string, RFC 1123 and RFC 2822,
-  > they use the same format.
+  > When talking about date time string, RFC 1123 and RFC 2822 are using
+  > the same format.
 
   ## Unsupported features
 
@@ -14,14 +14,14 @@ defmodule RFC2822.DateTime do
 
   In RFC 2822, `UTC` shouldn't be used as a timezone.
 
-  When producing an RFC 2822 date time string, we complied with this rule.
+  When producing a RFC 2822 date time string, we complied with this rule.
 
-  But, when parsing an RFC 2822 date time string, in order to support 
+  But, when parsing a RFC 2822 date time string, in order to support 
   non-standard date time strings, we broke this rule.
   """
 
   @doc """
-  Converts the given `datetime` to a string according RFC 2822.
+  Converts the given `datetime` to a string described by RFC 2822.
 
   ## Example
 
@@ -39,7 +39,7 @@ defmodule RFC2822.DateTime do
   end
 
   @doc """
-  Parses the extended date time format described by RFC 2822.
+  Parses a string in the extended date time format described by RFC 2822.
 
   ## Example
 
