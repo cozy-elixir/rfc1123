@@ -1,4 +1,6 @@
 defmodule RFC2822.DateTime.Parsec do
+  @moduledoc false
+
   # parsec:RFC2822.DateTime.Parsec
 
   import NimbleParsec

@@ -59,7 +59,7 @@ defmodule RFC2822.MixProject do
 
   defp aliases do
     [
-      compile: ["nimble_parsec.compile lib/rfc2822/datetime_parsec.ex.exs", "compile"],
+      "compile.datetime_parser": ["nimble_parsec.compile lib/rfc2822/datetime_parsec.ex.exs"],
       publish: ["hex.publish", "tag"],
       tag: &tag_release/1
     ]
